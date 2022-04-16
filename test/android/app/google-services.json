@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "381452400288",
+    "firebase_url": "https://hitchbooks-default-rtdb.firebaseio.com",
+    "project_id": "hitchbooks",
+    "storage_bucket": "hitchbooks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381452400288:android:5a40ec17e5a0ea054ffbc5",
+        "android_client_info": {
+          "package_name": "com.Hitchbooks.Hitch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381452400288-ri7171d40t7ijs3i9vkh8iierpurjsi1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnqrywvMvqW4cwmxGyWA_v8usgPi52zbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381452400288-ri7171d40t7ijs3i9vkh8iierpurjsi1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "381452400288-sf1s8t99l558f2uq60ageh2rgnet01nh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Hitchbooks.Hitch"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
