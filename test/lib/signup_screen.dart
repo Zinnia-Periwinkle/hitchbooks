@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, avoid_print
+// ignore_for_file: prefer_const_constructors, avoid_print, prefer_const_literals_to_create_immutables
 
 import 'package:sendbird_sdk/sendbird_sdk.dart';
 
@@ -44,37 +44,47 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void signUpUser() async {
-    if (_emailController.text.isNotEmpty ||
-        _passwordController.text.isNotEmpty ||
-        _usernameController.text.isNotEmpty ||
-        _bioController.text.isNotEmpty ||
-        _image != null) {
-      setState(() {
-        _isLoading = true;
-      });
-      String res = await AuthMethods().signUpUser(
-          email: _emailController.text,
-          password: _passwordController.text,
-          username: _usernameController.text,
-          bio: _bioController.text,
-          file: _image!);
+    // set loading to true
+    setState(() {
+      _isLoading = true;
+    });
 
+    // signup user using our authmethodds
+    String res = await AuthMethods().signUpUser(
+        email: _emailController.text,
+        password: _passwordController.text,
+        username: _usernameController.text,
+        bio: _bioController.text,
+        file: _image!);
+    // if string returned is sucess, user has been created
+    if (res == "success") {
       setState(() {
         _isLoading = false;
       });
-      print(res);
-      if (res != 'success!') {
-        showSnackBar(res, context);
-        setState(() {
-          _isLoading = false;
-        });
-      } else {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const ResponsiveLayout(
-                  MobileScreenLayout: Mobile(),
-                  WebScreenLayout: WebScreenLayout(),
-                )));
-      }
+      // navigate to the home screen
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            MobileScreenLayout: Mobile(),
+            WebScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      // show the error
+      SimpleDialog(
+        children: [
+          SimpleDialogOption(
+            child: Text('Some error occured :('),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      );
     }
   }
 
@@ -108,14 +118,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         radius: 64,
                         backgroundImage: AssetImage('images/no_photo.png'),
                       ),
-                // Positioned(
-                //   bottom: -10,
-                //   left: 80,
-                //   child: IconButton(
-                //     onPressed: selectImage,
-                //     icon: const Icon(Icons.add_a_photo),
-                //   ),
-                // ),
                 const SizedBox(
                   height: 54,
                   child: Text(
@@ -160,6 +162,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(
                   height: 12,
+                  child: Text(
+                    'Password should be 6 characters at least',
+                    style: TextStyle(color: Colors.grey),
+                  ),
                 ),
                 TextButton(
                     onPressed: selectImage,
@@ -191,6 +197,24 @@ class _SignupScreenState extends State<SignupScreen> {
                                       })
                                 ]);
                           });
+                      if (_image == null) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SimpleDialog(
+                                  title: Text('you have to add a picture!'),
+                                  children: [
+                                    SimpleDialogOption(
+                                        child: Text('Learn More'),
+                                        onPressed: () async {}),
+                                    SimpleDialogOption(
+                                        child: Text('Ok'),
+                                        onPressed: () async {
+                                          Navigator.pop(context);
+                                        })
+                                  ]);
+                            });
+                      }
                     } else {
                       signUpUser();
                     }

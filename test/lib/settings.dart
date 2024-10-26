@@ -87,163 +87,114 @@ class _SettingsScreenState extends State<SettingsScreen> {
           )
         : Scaffold(
             appBar: AppBar(
+              backgroundColor: Colors.white,
               title: Text(
-                'Report A Problem',
+                'Settings',
                 style: TextStyle(color: Colors.black),
               ),
-              centerTitle: true,
-              backgroundColor: Colors.white,
-              elevation: 0,
             ),
-            body: Column(
-              children: [
+            body: Column(children: [
+              // Row(children: [
+              //   Text(
+              //     'Change your username',
+              //     style: TextStyle(color: Colors.black),
+              //   ),
+              //   TextFieldInput(
+              //       hintText: 'type your new username here',
+              //       textEditingController: _usernameController,
+              //       textInputType: TextInputType.none),
+              //   TextButton(
+              //       onPressed: () async {
+              //         await _firestore
+              //             .collection('users')
+              //             .doc(user.username)
+              //             .update({'username': _usernameController.text});
+              //       },
+              //       child: Text(
+              //         'Change',
+              //         style: TextStyle(color: Colors.black),
+              //       ))
+              // ]),
+              // Row(
+              //   children: [Text('Dark or Night Mode?'), ChangeThemeButton()],
+              // ),
+              SizedBox(
+                height: 50,
+                child: Text('Report a Problem'),
+              ),
+              Row(children: [
                 SizedBox(
-                  height: 30,
+                  height: 50,
+                  child: text == ''
+                      ? Text('This Problem is related to')
+                      : Text(text),
                 ),
-                Row(
-                  children: [Text('My Problem is Related to:')],
-                ),
-                Row(
-                  children: [
-                    DropdownButton(
-                        hint: text == '' ? Text('Nothing yet') : Text(text),
-                        items: [
-                          DropdownMenuItem(
-                              child: Text('Posts'), value: 'Posts'),
-                          DropdownMenuItem(
-                              child: Text('A user'), value: 'A user'),
-                          DropdownMenuItem(
-                              child: Text('a bug'), value: 'a bug'),
-                          DropdownMenuItem(
-                              child: Text('a modification'),
-                              value: 'a modification'),
-                        ].toList(),
-                        onChanged: (value) {
-                          setState(() => Problem = value.toString());
-                          setState(() {
-                            text = Problem;
-                          });
-                        }),
-                  ],
-                ),
+              ]),
+              SizedBox(
+                height: 50,
+                child: SizedBox(
+                    child: Row(children: [
+                  DropdownButton(
+                      items: [
+                        DropdownMenuItem(child: Text('Posts'), value: 'Posts'),
+                        DropdownMenuItem(
+                            child: Text('A user'), value: 'A user'),
+                        DropdownMenuItem(child: Text('a bug'), value: 'a bug'),
+                        DropdownMenuItem(
+                            child: Text('a modification'),
+                            value: 'a modification'),
+                      ].toList(),
+                      onChanged: (value) {
+                        setState(() => Problem = value.toString());
+                        setState(() {
+                          text = Problem;
+                        });
+                      }),
+                ])),
+              ),
+              Row(children: [
                 SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      height: 50,
+                    width: 300,
+                    height: 50,
+                    child: TextFieldInput(
+                        hintText: 'Your email :)',
+                        textEditingController: _emailController,
+                        textInputType: TextInputType.emailAddress))
+              ]),
+              SizedBox(
+                height: 50,
+              ),
+              SizedBox(
+                  width: 300,
+                  height: 50,
+                  child: TextFieldInput(
+                      hintText: 'Name',
+                      textEditingController: _nameController,
+                      textInputType: TextInputType.name)),
+              SizedBox(
+                height: 50,
+              ),
+              Row(
+                children: [
+                  SizedBox(
                       width: 300,
+                      height: 50,
                       child: TextFieldInput(
-                          hintText: 'Your Email',
-                          textEditingController: _emailController,
-                          textInputType: TextInputType.emailAddress),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                        height: 50,
-                        width: 300,
-                        child: TextFieldInput(
-                            hintText: 'Name',
-                            textEditingController: _nameController,
-                            textInputType: TextInputType.name)),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                        width: 300,
-                        height: 50,
-                        child: TextFieldInput(
-                            hintText: 'write your problem',
-                            textEditingController: _infoController,
-                            textInputType: TextInputType.name))
-                  ],
-                ),
-                Align(
-                    alignment: Alignment.center,
-                    child: TextButton(
-                        onPressed: sendEmail,
-                        child: Text(
-                          'Submit',
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Color(0xFF52b788),
-                          ),
-                        )))
-              ],
-            ));
-    // : Scaffold(
-    //     body: Column(children: [
-    //     SizedBox(
-    //       height: 50,
-    //       child: Text('Report a Problem'),
-    //     ),
-    //     Row(children: [
-    //       SizedBox(height: 50, child: Text('This Problem is related to')),
-    //       SizedBox(
-    //         height: 100,
-    //         child: Row(children: [
-    //           DropdownButton(
-    //               hint: text == '' ? Text('Nothing yet') : Text(text),
-    //               items: [
-    //                 DropdownMenuItem(child: Text('Posts'), value: 'Posts'),
-    //                 DropdownMenuItem(
-    //                     child: Text('A user'), value: 'A user'),
-    //                 DropdownMenuItem(child: Text('a bug'), value: 'a bug'),
-    //                 DropdownMenuItem(
-    //                     child: Text('a modification'),
-    //                     value: 'a modification'),
-    //               ].toList(),
-    //               onChanged: (value) {
-    //                 setState(() => Problem = value.toString());
-    //                 setState(() {
-    //                   text = Problem;
-    //                 });
-    //               }),
-    //         ]),
-    //       ),
-    //     ]),
-    //     Row(children: [
-    //       SizedBox(
-    //           width: 300,
-    //           height: 50,
-    //           child: TextFieldInput(
-    //               hintText: 'Your email :)',
-    //               textEditingController: _emailController,
-    //               textInputType: TextInputType.emailAddress))
-    //     ]),
-    //     SizedBox(
-    //         height: 50,
-    //         width: 300,
-    //         child: TextFieldInput(
-    //             hintText: 'Name',
-    //             textEditingController: _nameController,
-    //             textInputType: TextInputType.name)),
-    //     SizedBox(
-    //       height: 50,
-    //     ),
-    //     Row(
-    //       children: [
-    //         SizedBox(
-    //             width: 300,
-    //             height: 50,
-    //             child: TextFieldInput(
-    //                 hintText: 'write your problem',
-    //                 textEditingController: _infoController,
-    //                 textInputType: TextInputType.name))
-    //       ],
-    //     ),
-    //
-    //   ]));
+                          hintText: 'write your problem',
+                          textEditingController: _infoController,
+                          textInputType: TextInputType.name))
+                ],
+              ),
+              Row(children: [
+                ElevatedButton(
+                    onPressed: sendEmail,
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(
+                          color: Colors.black,
+                          backgroundColor: Color(0xFF52b788)),
+                    ))
+              ])
+            ]));
   }
 }

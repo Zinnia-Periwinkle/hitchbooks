@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test/login_screen.dart';
+import 'package:test/my_posts.dart';
 import 'package:test/providers/user_provider.dart';
 import 'package:test/resources/auth_methods.dart';
 import 'package:test/resources/firestore_methods.dart';
@@ -21,6 +22,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   var userData = {};
+
   int postLen = 0;
   int followers = 0;
   int following = 0;
@@ -55,8 +57,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .get();
       postLen = postSnap.docs.length;
       userData = userSnap.data()!;
-      followers = userSnap.data()!['followers'];
-      following = userSnap.data()!['following'];
+      setState(() {
+        followers = userSnap.data()!['followers'].length;
+        following = userSnap.data()!['following'].length;
+      });
+
       isFollowing = userSnap
           .data()![followers]
           .contains(FirebaseAuth.instance.currentUser!.uid);
@@ -89,9 +94,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ? const Center(
             child: CircularProgressIndicator(),
           )
-        // : DefaultTabController(
-        //     length: 3,
-        // child:
         : Scaffold(
             appBar: AppBar(
               toolbarHeight: 50,
@@ -181,125 +183,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 },
                               )
                   ],
-                )
+                ),
+                Column(
+                  children: [
+                    Row(children: [
+                      Text('My Posts'),
+                      IconButton(
+                          onPressed: () {
+                            dispose();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    MyPosts(uid: widget.uid)));
+                          },
+                          icon: Icon(Icons.arrow_back))
+                    ]),
+                    // StreamBuilder(
+                    //     stream: FirebaseFirestore.instance
+                    //         .collection('posts')
+                    //         .where('uid', isEqualTo: userData['uid'])
+                    //         .snapshots(),
+                    //     builder: (context,
+                    //         AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                    //             snapshot) {
+                    //       if (snapshot.connectionState ==
+                    //           ConnectionState.waiting) {
+                    //         return Center(
+                    //           child: CircularProgressIndicator(),
+                    //         );
+                    //       }
+                    //       return ListView.builder(
+                    //           scrollDirection: Axis.vertical,
+                    //           shrinkWrap: true,
+                    //           itemCount: 1,
+                    //           itemBuilder: (context, index) =>
+                    //               Text(userInfo.data()!['followers']));
+                    //     }),
+                  ],
+                ),
+                //
               ],
             ),
-
-            //               Column(
-            //                 children: [
-            //                   Row(children: [
-            //                     Text('My Posts'),
-            //                     IconButton(
-            //                         onPressed: () {
-            //                           dispose();
-            //                           Navigator.of(context).push(MaterialPageRoute(
-            //                               builder: (context) => MyPosts(
-            //                                   uid: FirebaseAuth
-            //                                       .instance.currentUser!.uid)));
-            //                         },
-            //                         icon: Icon(Icons.arrow_back))
-            //                   ]),
-            //                   // StreamBuilder(
-            //                   //     stream: FirebaseFirestore.instance
-            //                   //         .collection('posts')
-            //                   //         .where('uid', isEqualTo: userData['uid'])
-            //                   //         .snapshots(),
-            //                   //     builder: (context,
-            //                   //         AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-            //                   //             snapshot) {
-            //                   //       if (snapshot.connectionState ==
-            //                   //           ConnectionState.waiting) {
-            //                   //         return Center(
-            //                   //           child: CircularProgressIndicator(),
-            //                   //         );
-            //                   //       }
-            //                   //       return ListView.builder(
-            //                   //           scrollDirection: Axis.vertical,
-            //                   //           shrinkWrap: true,
-            //                   //           itemCount: 1,
-            //                   //           itemBuilder: (context, index) =>
-            //                   //               Text(userInfo.data()!['followers']));
-            //                   //     }),
-            //                 ],
-            //               ),
-            //               Column(children: [
-            //                 Row(children: [
-            //                   Text('Followers'),
-            //                   IconButton(
-            //                       onPressed: () {}, icon: Icon(Icons.arrow_circle_up)),
-            //                 ]),
-            //                 Row(
-            //                   children: [
-            //                     TextButton(onPressed: () {}, child: Text('Following'))
-            //                   ],
-            //                 ),
-            //                 Padding(
-            //                   padding: const EdgeInsets.all(16.0),
-            //                   child: CircleAvatar(
-            //                     backgroundColor: Colors.grey,
-            //                     backgroundImage: NetworkImage(userData['photoUrl']),
-            //                     radius: 40,
-            //                   ),
-            //                 ),
-            //               ])
-            //             ],
-
-            //             //   Container(
-            //             //     alignment: Alignment.center,
-            //             //     padding: const EdgeInsets.only(
-            //             //       top: 15,
-            //             //     ),
-            //             //     child: Text(
-            //             //       userData['username'],
-            //             //       style: TextStyle(fontWeight: FontWeight.bold),
-            //             //     ),
-            //             //   ),
-            //             //   Container(
-            //             //     alignment: Alignment.center,
-            //             //     padding: const EdgeInsets.only(
-            //             //       top: 1,
-            //             //     ),
-            //             //     child: Text(
-            //             //       userData['bio'],
-            //             //     ),
-            //             //   )
-            //             // ],
-            //             //   ),
-            //             // ),
-            //             // const Divider(),
-            //             // FutureBuilder(
-            //             //     future: FirebaseFirestore.instance
-            //             //         .collection('posts')
-            //             //         .where('uid', isEqualTo: widget.uid)
-            //             //         .get(),
-            //             //     builder: (context, snapshot) {
-            //             //       if (snapshot.connectionState == ConnectionState.waiting) {
-            //             //         return const Center(
-            //             //           child: CircularProgressIndicator(),
-            //             //         );
-            //             //       }
-            //             //       return GridView.builder(
-            //             //           shrinkWrap: true,
-            //             //           gridDelegate:
-            //             //               const SliverGridDelegateWithFixedCrossAxisCount(
-            //             //                   crossAxisCount: 3,
-            //             //                   crossAxisSpacing: 5,
-            //             //                   mainAxisSpacing: 1.5,
-            //             //                   childAspectRatio: 1),
-            //             //           itemCount: (snapshot.data! as dynamic).docs.length,
-            //             //           itemBuilder: (context, index) {
-            //             //             DocumentSnapshot snap =
-            //             //                 (snapshot.data! as dynamic).docs.length[index];
-
-            //             //             return Container(
-            //             //                 child: Image(
-            //             //               image: NetworkImage(snap['postUrl']),
-            //             //               fit: BoxFit.cover,
-            //             //             ));
-            //             //           });
-            //             //     })
-            //             //   ],
-            //             // ),
           );
   }
 

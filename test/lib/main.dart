@@ -6,22 +6,16 @@ import 'package:test/providers/user_provider.dart';
 import 'package:test/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:test/theme/colors.dart';
-import 'dart:io';
-import 'package:device_preview/device_preview.dart';
+import 'package:sendbird_sdk/sendbird_sdk.dart';
+
+
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(
-    DevicePreview(
-      enabled: true,
-      tools: [
-        ...DevicePreview.defaultTools,
-      ],
-      builder: (context) => MyApp(),
-    ),
-  );
+  runApp(MyApp());
   //WidgetsFlutterBinding.ensureInitialized();
 }
 

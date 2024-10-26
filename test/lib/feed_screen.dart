@@ -119,6 +119,18 @@ class _FeedScreenState extends State<FeedScreen> {
                           },
                         ),
                         SimpleDialogOption(
+                          child: Text('Diaries of the Day'),
+                          onPressed: () async {
+                            setState(() {
+                              stream = FirebaseFirestore.instance
+                                  .collection('posts')
+                                  .where('BoardType',
+                                      isEqualTo: 'News of the Day')
+                                  .snapshots();
+                            });
+                          },
+                        ),
+                        SimpleDialogOption(
                           child: Text('Cancel'),
                           onPressed: () async {
                             setState(() {

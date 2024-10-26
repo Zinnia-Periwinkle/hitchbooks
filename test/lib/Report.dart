@@ -72,57 +72,60 @@ class _ReportScreenState extends State<ReportScreen> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               title: Text(
-                'Report a Post',
+                'Settings',
                 style: TextStyle(color: Colors.black),
               ),
             ),
             body: Column(children: [
               SizedBox(
                 height: 50,
+                child: Text('Report a Post'),
               ),
-              Align(
-                  alignment: Alignment.center,
-                  child: SizedBox(
-                      width: 300,
-                      height: 50,
-                      child: TextFieldInput(
-                          hintText: 'Your email :)',
-                          textEditingController: _emailController,
-                          textInputType: TextInputType.emailAddress))),
-              SizedBox(
-                height: 50,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: SizedBox(
+              Row(children: [
+                SizedBox(
                     width: 300,
-                    // height: 50,
+                    height: 50,
                     child: TextFieldInput(
-                        hintText: 'The post publisher',
-                        textEditingController: _nameController,
-                        textInputType: TextInputType.name)),
-              ),
+                        hintText: 'Your email :)',
+                        textEditingController: _emailController,
+                        textInputType: TextInputType.emailAddress))
+              ]),
               SizedBox(
                 height: 50,
               ),
-              Align(
-                  alignment: Alignment.center,
-                  child: SizedBox(
+              SizedBox(
+                  width: 300,
+                  height: 50,
+                  child: TextFieldInput(
+                      hintText: 'The post publisher',
+                      textEditingController: _nameController,
+                      textInputType: TextInputType.name)),
+              SizedBox(
+                height: 50,
+              ),
+              Row(
+                children: [
+                  SizedBox(
                       width: 300,
                       height: 50,
                       child: TextFieldInput(
                           hintText: 'the board type',
                           textEditingController: _infoController,
-                          textInputType: TextInputType.name))),
-              Align(
-                  alignment: Alignment.center,
-                  child: TextButton(
-                      onPressed: sendEmail,
-                      child: Text(
-                        'Submit',
-                        style:
-                            TextStyle(color: Color(0xFF52b788), fontSize: 20),
-                      )))
+                          textInputType: TextInputType.name))
+                ],
+              ),
+              Row(children: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shadowColor: Color(0xFF52b788)),
+                    onPressed: sendEmail,
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ))
+              ])
             ]));
   }
 }

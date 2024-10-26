@@ -24,8 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
   }
 
   void loginUser() async {
@@ -45,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 WebScreenLayout: WebScreenLayout(),
               )));
     }
-    dispose();
+    // dispose();
   }
 
   @override
@@ -116,10 +114,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Color(0xFF52b788)),
                   ),
                 ),
-                // Flexible(
-                //   child: Container(),
-                //   flex: 2,
-                // ),
                 SizedBox(
                   width: 14,
                   height: 25,

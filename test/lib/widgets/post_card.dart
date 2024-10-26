@@ -12,7 +12,6 @@ import 'package:test/providers/user_provider.dart';
 import 'package:test/resources/firestore_methods.dart';
 import 'package:test/theme/utils.dart';
 import 'package:test/widgets/like_animation.dart';
-import 'package:share_plus/share_plus.dart';
 
 class PostCard extends StatefulWidget {
   final snap;
@@ -64,8 +63,6 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
-    var username = widget.snap['username'];
-    String share = 'Take a look at what $username';
     return isLoading
         ? const Center(
             child: CircularProgressIndicator(),
@@ -139,7 +136,7 @@ class _PostCardState extends State<PostCard> {
                   child: TextButton(
                     child: Text(
                       '#${widget.snap['BoardType']}',
-                      style: TextStyle(color: Colors.blue),
+                      style: TextStyle(color: Color(0xFF52b788)),
                     ),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -212,16 +209,14 @@ class _PostCardState extends State<PostCard> {
                         icon:
                             Icon(Icons.comment_outlined, color: Colors.black)),
                     IconButton(
-                        onPressed: () async {
-                          final box = context.findRenderObject() as RenderBox?;
-
-                          await Share.shareFiles(widget.snap['postUrl'],
-                              text: widget.snap['descirption'],
-                              subject: share,
-                              sharePositionOrigin:
-                                  box!.localToGlobal(Offset.zero) & box.size);
-                        },
+                        onPressed: () {},
                         icon: Icon(Icons.send, color: Colors.black)),
+                    Expanded(
+                        child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: IconButton(
+                          onPressed: () {}, icon: Icon(Icons.bookmark_border)),
+                    ))
                   ],
                 ),
                 Container(

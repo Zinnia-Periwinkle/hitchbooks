@@ -115,8 +115,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final User user = Provider.of<UserProvider>(context).getUser;
     final User user = Provider.of<UserProvider>(context).getUser;
-
     return _file == null
         ? Center(
             child: SizedBox(
@@ -144,9 +144,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ),
             body: Column(
               children: <Widget>[
-                _isLoading
-                    ? const LinearProgressIndicator()
-                    : const Padding(padding: EdgeInsets.only(top: 0.0)),
+                const Padding(padding: EdgeInsets.only(top: 0.0)),
                 const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -159,76 +157,90 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     ),
                   ],
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: SizedBox(
-                    height: 200,
-                    width: 200,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        fit: BoxFit.fill,
-                        alignment: FractionalOffset.topCenter,
-                        image: MemoryImage(_file!),
-                      )),
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 200,
+                      width: 600,
+                      child: AspectRatio(
+                        aspectRatio: 487 / 451,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                            fit: BoxFit.fill,
+                            alignment: FractionalOffset.topCenter,
+                            image: MemoryImage(_file!),
+                          )),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: SizedBox(
-                    height: 50,
-                    width: 300,
-                    child: TextField(
-                      controller: _descriptionController,
-                      decoration: const InputDecoration(
-                          hintText: "Write a caption...",
-                          border: InputBorder.none),
-                      maxLines: 8,
-                    ),
-                  ),
+                Row(
+                  children: [
+                    Center(
+                      child: SizedBox(
+                        height: 50,
+                        width: 600,
+                        child: TextField(
+                          controller: _descriptionController,
+                          decoration: const InputDecoration(
+                              hintText: "Write a caption...",
+                              border: InputBorder.none),
+                          maxLines: 8,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
                 const Divider(),
                 SizedBox(
                   child: Text('Choose your board!'),
                 ),
                 SizedBox(
-                    child: DropdownButton(
-                        hint: text == '' ? Text('nothing yet') : Text(text),
-                        items: [
-                          DropdownMenuItem(
-                              child: Text('Book of the Month'),
-                              value: 'Book of the Month'),
-                          DropdownMenuItem(
-                              child: Text('Poem of the Week'),
-                              value: 'Poem of the Week'),
-                          DropdownMenuItem(
-                              child: Text('Song of the Week'),
-                              value: 'Song of the Week'),
-                          DropdownMenuItem(
-                              child: Text('Word of the Day'),
-                              value: 'Word of the Day'),
-                          DropdownMenuItem(
-                              child: Text('Notable of the Week'),
-                              value: 'Notable of the Week'),
-                          DropdownMenuItem(
-                              child: Text('Quote of the Week'),
-                              value: 'Quote of the Week'),
-                          DropdownMenuItem(
-                              child: Text('News of the Day'),
-                              value: 'News of the Day'),
-                        ].toList(),
-                        onChanged: (value) {
-                          setState(() => BoardType = value.toString());
-                          setState(() {
-                            text = BoardType;
-                          });
-                        })),
+                  child: Center(
+                      child: DropdownButton(
+                          hint: text == '' ? Text('nothing yet') : Text(text),
+                          items: [
+                            DropdownMenuItem(
+                                child: Text('Book of the Month'),
+                                value: 'Book of the Month'),
+                            DropdownMenuItem(
+                                child: Text('Poem of the Week'),
+                                value: 'Poem of the Week'),
+                            DropdownMenuItem(
+                                child: Text('Song of the Week'),
+                                value: 'Song of the Week'),
+                            DropdownMenuItem(
+                                child: Text('Word of the Day'),
+                                value: 'Word of the Day'),
+                            DropdownMenuItem(
+                                child: Text('Notable of the Week'),
+                                value: 'Notable of the Week'),
+                            DropdownMenuItem(
+                                child: Text('Quote of the Week'),
+                                value: 'Quote of the Week'),
+                            DropdownMenuItem(
+                                child: Text('News of the Day'),
+                                value: 'News of the Day'),
+                            DropdownMenuItem(
+                                child: Text('Diaries of the Day'),
+                                value: 'Diaries of the Day'),
+                          ].toList(),
+                          onChanged: (value) {
+                            setState(() => BoardType = value.toString());
+                            setState(() {
+                              text = BoardType;
+                            });
+                          })),
+                ),
                 TextButton(
-                  child: Text(
-                    'Post',
-                    style: TextStyle(color: Color(0xFF52b788)),
-                  ),
+                  child: _isLoading
+                      ? CircularProgressIndicator()
+                      : Text(
+                          'Post',
+                          style: TextStyle(color: Color(0xFF52b788)),
+                        ),
                   onPressed: () {
                     if (badWords.contains(_descriptionController.text)) {
                       showDialog(

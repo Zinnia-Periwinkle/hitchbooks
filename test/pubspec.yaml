@@ -53,10 +53,6 @@ dependencies:
   google_sign_in: ^5.2.4
   dash_chat: ^1.1.16
   sendbird_sdk: ^3.1.12
-  device_preview: ^1.0.0
-  share_plus: ^4.0.4
-  # com.sendbird.flutter_example:
-  #   path: path/to/package
 
 # dev_dependencies:
 #   flutter_test:
@@ -118,7 +114,7 @@ flutter:
   fonts:
     - family: Roboto
       fonts:
-        - asset: fonts/Roboto-Regular.ttf
+        - asset: fonts/Roboto-LightItalic.ttf
     - family: IndieFlower
       fonts:
         - asset: fonts/IndieFlower-Regular.ttf

@@ -41,24 +41,11 @@
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<true />
-		<key>NSPhotoLibraryUsageDescription</key>
-		<string>Allow this app to access your photos</string>
+		<key>NSPhotoLibraryUsageDescription </key>
+		<string>Photo Library Usage</string>
 		<key>NSCameraUsageDescription</key>
-		<string>Allow this app to access your camera</string>
+		<string>Camera Usage</string>
 		<key>NSMicrophoneUsageDescription  </key>
 		<string>Mic Usage</string>
-		<key>CFBundleURLTypes</key>
-		<array>
-			<dict>
-				<key>CFBundleTypeRole</key>
-				<string>Editor</string>
-				<key>CFBundleURLName</key>
-				<string>deeplink.flutter.dev</string>
-				<key>CFBundleURLSchemes</key>
-				<array>
-					<string>poc</string>
-				</array>
-			</dict>
-		</array>
 	</dict>
 </plist>
